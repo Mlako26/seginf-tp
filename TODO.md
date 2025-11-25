@@ -17,7 +17,7 @@
     - [ ] Lore: Hacer script Binario
     - [ ] Manu: Hacer scrip Mysql Dump
     - [ ] Gonza: Hacer script que copia pagina web
-    - [X] Gonza: Hacer script readme
+    - [X] Gonza: Hacer script markdown
     - [ ] Lore: Hacer script Mail
     - [ ] Hacer script Excel
     - [ ] Hacer script Docs

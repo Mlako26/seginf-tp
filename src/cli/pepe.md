@@ -37,20 +37,22 @@ cd src/cli
 python3 tokensnare-cli.py
 ```
 
-Notar que para ejecutarse, el servidor web debe de estar levantado.
-
 Los scripts de generación de Tokens pueden encontrarse en la carpeta `src/cli/tokens`, y deben de contener clases que implementen la interfaz encontrada en el archivo `honeytoken.py` que se encuentra enel mismo directorio.
 
+Por ahora el 
 
 #### markdown.py
 
 Ejemplo de uso:
 
 ```bash
-python3 tokensnare-cli.py markdown -i ../../README.md -o secret_info.md
+python3 tokensnare-cli.py -o my_new_token.md markdown -i ../../README.md
 ```
 
 ese markdown si es agregado a un repo de github cada ves que sea
 accedido en el navegador, va a llamar al backend alertando el token fue accedido
 
 [Docs](https://docs.google.com/document/d/1mhF7j0WlURx2hgsLwweNVgSIfIATHDBzwMJvSRAdf6M/edit?tab=t.0)
+
+
+![status](http://190.19.111.22:8080/resource/yGbfhm_8Y_4.png)
