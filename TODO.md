@@ -22,14 +22,16 @@
     - [ ] Hacer script Excel
     - [ ] Hacer script Docs
     - [ ] Hacer script PDF
-  - [ ] Manu: CLI
-    - [ ] Hacer que levante una config con la address
+  - [x] Manu: CLI
+    - [x] Hacer que levante una config con la address
+    - [ ] Ver al final si queremos refactorizarla un poco
 - [X] Gonza-Ivo: tokensnare-server
   - [X] Elegir cómo hacer el servidor web (Flask, FastAPI, express.js, etc)
   - [X] Hacer endpoint para registrar nuevos tokens
   - [X] Hacer endpoint para recibir los GETS de los tokens
   - [ ] Hacer enpoint (`/metrics`, `/{token-id}`?) que tenga el registro de los accesos
   - [X] Hacer una mini db con accesos y el registro de los tokens
+  - [X] Dockerizar
 - [ ] Lore: Informe
   - [ ] Importar alguna plantilla
   - [ ] Portada

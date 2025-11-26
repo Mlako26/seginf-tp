@@ -1,5 +1,5 @@
 from pathlib import Path
-from tokens.honeytoken import HoneyTokenGenerator
+from generators.honeytoken import HoneyTokenGenerator
 import shutil
 
 class MarkdownGenerator(HoneyTokenGenerator):

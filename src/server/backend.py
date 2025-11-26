@@ -1,9 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import secrets
 import sqlite3
 import os
 
-DB_PATH = "honeytokens.db"
+DB_PATH = os.environ.get("DB_PATH", "honeytokens.db")
 
 #inicializar DB
 if not os.path.exists(DB_PATH):
@@ -30,8 +30,10 @@ def new_token():
     conn.execute("INSERT INTO issued_tokens (id) VALUES (?)", (token,))
     conn.commit()
     conn.close()
+    
+    url = f"{request.host_url}resource/{token}"
 
-    return jsonify({"id": token})
+    return jsonify({"id": token, "url": url})
 
 @app.get("/resource/<token>")
 def access_resource(token: str):

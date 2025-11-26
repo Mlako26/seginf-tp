@@ -1,13 +1,21 @@
 import click
 import requests
+import tomllib
 
-from tokens.markdown import MarkdownGenerator
-from tokens.honeytoken import HoneyTokenGenerator
+from generators.markdown import MarkdownGenerator
+from generators.honeytoken import HoneyTokenGenerator
 
-def get_endpoint_base_uri():
-    token_id = requests.get("http://127.0.0.1:8080/new").json().get("id")
-    ip = requests.get("https://api.ipify.org").text
-    return f"http://{ip}:8080/resource/{token_id}"
+def get_endpoint_base_uri() -> str:
+    with open("config.toml", "rb") as f:
+        cfg = tomllib.load(f)
+    try:
+        return requests.get(
+            f"http://{cfg['webserver']['host']}:{cfg['webserver']['port']}/new",
+            timeout=5
+        ).json().get("url")
+    except Exception:
+        print(f"Failed connecting to the web-server at {cfg['webserver']['host']}:{cfg['webserver']['port']}")
+        quit(1)
 
 def get_token_generator(type: str) -> HoneyTokenGenerator:
     match type:

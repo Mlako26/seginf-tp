@@ -2,39 +2,63 @@
 
 ## TP1 - TokenSnare
 
-Por ahora, para ejecutar todas las pruebas, hace falta generar un entorno virtual con ambos requirements para la CLI tool y el webserver. Eventualmente el webserver se hosteara en un docker con las dependencias instaladas.
+### Web Server
+
+Para iniciar el webserver, hay que tener docker instalado y corriendo en el sistema.
+
+Todos los comandos deben de ser ejecutados dentro del directorio del servidor:
+
+```bash
+cd src/server
+```
+
+Construir:
+
+```bash
+docker-compose build
+```
+
+Levantar el server:
+
+```bash
+docker-compose up -d
+```
+
+Bajar el server:
+
+```bash
+docker compose down
+```
+
+Ver logs:
+
+```bash
+docker-compose logs -f
+```
+
+Para saber que tokens fueron emitidos correr:
+
+```bash
+sqlite3 data/honeytokens.db "SELECT id FROM issued_tokens;"
+```
+
+Para saber que tokens fueron accedidos correr:
+
+```bash
+sqlite3 data/honeytokens.db "SELECT id, token FROM access_logs;"
+```
+
+### CLI Tool
+
+Para ejecutar la herramienta, hace falta generar un entorno virtual con las dependencias.
 
 Desde el directorio raiz del repo:
 
 ``` bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -r src/requirements.txt
+pip install -r src/cli/requirements.txt
 ```
-
-### Web Server
-
-Para iniciar el webserver, ejecutar el siguiente comando:
-
-```bash
-python3 src/server/backend.py
-```
-
-No se olviden de abrir el puerto 8080 para que sea accesible desde internet
-
-Para saber que tokens fueron emitidos correr:
-
-```bash
-sqlite3 honeytokens.db "SELECT id FROM issued_tokens;"
-```
-
-Para saber que tokens fueron accedidos correr:
-
-```bash
-sqlite3 honeytokens.db "SELECT id, token FROM access_logs;"
-```
-
-### CLI Tool
 
 La herramienta puede correrse con los siguiente comandos:
 
@@ -43,9 +67,11 @@ cd src/cli
 python3 tokensnare-cli.py
 ```
 
-Notar que para ejecutarse, el servidor web debe de estar levantado.
+Notar que para ejecutarse, el contenedor con el servidor web debe de estar levantado.
 
-Los scripts de generación de Tokens pueden encontrarse en la carpeta `src/cli/tokens`, y deben de contener clases que implementen la interfaz encontrada en el archivo `honeytoken.py` que se encuentra enel mismo directorio. Un ejemplo de cómo hacerlo es el token ya implementado para markdowns.
+La herramienta utiliza el archivo `src/cli/config.toml` para saber la uri (o ip) y puerto del tokensnare-server con el que comunicarse. Por defecto es `localhost:8080`, conectándose al contenedor local, pero puede eventualmente ser la dirección de un servidor remoto y uno de sus puertos abiertos.
+
+Los generadores de Tokens pueden encontrarse en la carpeta `src/cli/generators/`, y deben de contener una clase que implemente la interfaz `HoneyTokenGenerator` encontrada en el archivo `honeytoken.py`. Un ejemplo de implementación es el generador para markdowns.
 
 La idea de la interfaz es que todos los tokens reciban como mínimo:
 
@@ -61,7 +87,4 @@ Ejemplo de uso:
 python3 tokensnare-cli.py markdown -i ../../README.md -o secret_info.md
 ```
 
-ese markdown si es agregado a un repo de github cada ves que sea
-accedido en el navegador, va a llamar al backend alertando el token fue accedido
-
-[Docs](https://docs.google.com/document/d/1mhF7j0WlURx2hgsLwweNVgSIfIATHDBzwMJvSRAdf6M/edit?tab=t.0)
+Ese markdown si es agregado a un repo de github cada ves que sea accedido en el navegador, va a llamar al backend alertando el token fue accedido.

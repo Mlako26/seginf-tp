@@ -1,0 +1,10 @@
+services:
+  honeytokens:
+    build: .
+    container_name: honeytokens_app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DB_PATH=/app/data/honeytokens.db
