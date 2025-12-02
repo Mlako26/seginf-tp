@@ -2,7 +2,6 @@ import click
 import requests
 import tomllib
 
-from generators.mysql_dump import MysqlDumpGenerator
 from generators.markdown import MarkdownGenerator
 from generators.honeytoken import HoneyTokenGenerator
 
@@ -16,7 +15,6 @@ def generate_token(type: str, output_path: str, **kwargs) -> None:
 def get_endpoint_base_uri() -> str:
     with open("config.toml", "rb") as f:
         cfg = tomllib.load(f)
-
     try:
         return requests.get(
             f"http://{cfg['webserver']['host']}:{cfg['webserver']['port']}/new",
@@ -28,14 +26,9 @@ def get_endpoint_base_uri() -> str:
 
 
 def get_token_generator(type: str) -> HoneyTokenGenerator:
-    with open("config.toml", "rb") as f:
-        cfg = tomllib.load(f)
-
     match type:
         case "markdown":
             return MarkdownGenerator()
-        case "mysql-dump":
-            return MysqlDumpGenerator(cfg['mysql_dump']['default_dump_path'])
         case _:
             print("No generator defined for this type of HoneyToken")
             quit(1)
@@ -71,7 +64,7 @@ def generate_binary(output: str):
 
 @tokensnare.command("mysql-dump")
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
-@click.option("--input", "-i", help="Dump file to be tokenized. If not provided a generic dump will be generated")
+@click.option("--input", "-i", help="Dump file to be tokenized. If not provided a generic dump will be generated.")
 def generate_mysql_dump(output: str, input: str | None) -> None:
     generate_token("mysql-dump", output, input_path=input)
 

@@ -24,7 +24,7 @@
     - [ ] Hacer script PDF
   - [x] Manu: CLI
     - [x] Hacer que levante una config con la address
-    - [ ] Ver al final si queremos refactorizarla un poco
+    - [x] Ver al final si queremos refactorizarla un poco
 - [X] Gonza-Ivo: tokensnare-server
   - [X] Elegir cómo hacer el servidor web (Flask, FastAPI, express.js, etc)
   - [X] Hacer endpoint para registrar nuevos tokens

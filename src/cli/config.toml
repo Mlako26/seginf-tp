@@ -1,3 +1,6 @@
 [webserver]
 host = "localhost"
 port = 8080
+
+[mysql_dump]
+default_dump_path = "./generators/assets/default_dump.sql"

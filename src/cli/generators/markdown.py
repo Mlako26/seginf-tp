@@ -14,7 +14,7 @@ class MarkdownGenerator(HoneyTokenGenerator):
 
         out = Path(output_path)
 
-        shutil.copy(input_path, output_path)
+        shutil.copy(input_path, out)
 
         with out.open("a", encoding="utf-8") as f:
             f.write(f"\n\n![status]({endpoint_base_uri}.png)\n")
