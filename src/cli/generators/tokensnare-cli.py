@@ -7,6 +7,7 @@ from generators.honeytoken import HoneyTokenGenerator
 from generators.binary import BinaryHoneyTokenGenerator
 from generators.email import EmailHoneyTokenGenerator
 from generators.mysql_dump import MysqlDumpGenerator
+from generators.qr import QRHoneyTokenGenerator
 
 
 def generate_token(type: str, output_path: str, **kwargs) -> None:
@@ -38,6 +39,8 @@ def get_token_generator(type: str) -> HoneyTokenGenerator:
             return BinaryHoneyTokenGenerator()
         case "email":
             return EmailHoneyTokenGenerator()
+        case "qr": 
+            return QRHoneyTokenGenerator()
         case _:
             print("No generator defined for this type of HoneyToken")
             quit(1)
@@ -62,7 +65,7 @@ def generate_markdown(input: str, output: str) -> None:
 @tokensnare.command("qr")
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
 def generate_qr(output: str):
-    print("qr generated!")
+    generate_token("qr", output)
 
 
 @tokensnare.command("binary")
