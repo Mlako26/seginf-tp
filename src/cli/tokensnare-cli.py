@@ -5,6 +5,8 @@ import tomllib
 from generators.mysql_dump import MysqlDumpGenerator
 from generators.markdown import MarkdownGenerator
 from generators.honeytoken import HoneyTokenGenerator
+from generators.binary import BinaryHoneyTokenGenerator
+from generators.email import EmailHoneyTokenGenerator
 
 
 def generate_token(type: str, output_path: str, **kwargs) -> None:
@@ -36,6 +38,10 @@ def get_token_generator(type: str) -> HoneyTokenGenerator:
             return MarkdownGenerator()
         case "mysql-dump":
             return MysqlDumpGenerator(cfg['mysql_dump']['default_dump_path'])
+        case "binary":
+            return BinaryHoneyTokenGenerator()
+        case "email":
+            return EmailHoneyTokenGenerator()
         case _:
             print("No generator defined for this type of HoneyToken")
             quit(1)
@@ -66,7 +72,8 @@ def generate_qr(output: str):
 @tokensnare.command("binary")
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
 def generate_binary(output: str):
-    print("binary generated!")
+    generate_token("binary", output)
+
 
 
 @tokensnare.command("mysql-dump")
@@ -85,7 +92,7 @@ def generate_web_page(output: str):
 @tokensnare.command("email")
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
 def generate_email(output: str):
-    print("email generated!")
+    generate_token("email", output)
 
 
 if __name__ == '__main__':
