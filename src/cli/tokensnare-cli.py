@@ -78,7 +78,6 @@ def generate_binary(output: str):
     generate_token("binary", output)
 
 
-
 @tokensnare.command("mysql-dump")
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
 @click.option("--input", "-i", help="Dump file to be tokenized. If not provided a generic dump will be generated")

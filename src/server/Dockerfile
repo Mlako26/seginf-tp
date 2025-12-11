@@ -15,5 +15,8 @@ COPY . .
 # Exponer el puerto donde corre Flask
 EXPOSE 8080
 
+# Exponer el puerto donde corre el server TCP para mysql
+EXPOSE 3306
+
 # Comando para lanzar el servidor
 CMD ["python", "backend.py"]

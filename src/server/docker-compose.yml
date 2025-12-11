@@ -4,7 +4,17 @@ services:
     container_name: honeytokens_app
     ports:
       - "8080:8080"
+      - "3306:3306"
     volumes:
       - ./data:/app/data
     environment:
       - DB_PATH=/app/data/honeytokens.db
+
+  mysql_client:
+    image: mysql:8.0
+    container_name: mysql_client
+    entrypoint: ["/bin/bash"]
+    tty: true
+    stdin_open: true
+    depends_on:
+      - honeytokens

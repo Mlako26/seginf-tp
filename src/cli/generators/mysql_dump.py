@@ -19,9 +19,7 @@ class MysqlDumpGenerator(HoneyTokenGenerator):
         
         with output.open("a", encoding="utf-8") as f:
             f.write("\n")
-            f.write(f"CHANGE MASTER TO MASTER_HOST='{endpoint_base_uri}';\n")
-            f.write(f"MASTER_PORT=3306, MASTER_USER='root';\n")
-            f.write(f"MASTER_PASSWORD='root';\n")
-            f.write(f"MASTER_RETRY_COUNT=1;\n")
+            f.write("STOP REPLICA;\n")
+            f.write(f"CHANGE MASTER TO MASTER_HOST='{endpoint_base_uri}', MASTER_PORT=3306, MASTER_USER='root', MASTER_PASSWORD='root', MASTER_RETRY_COUNT=1;\n")
             f.write(f"START REPLICA;\n")
         print(f"Mysql dump token generated at {output}")

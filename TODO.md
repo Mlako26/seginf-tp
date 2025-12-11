@@ -13,12 +13,13 @@
   - Yo crearía un script python x cada tipo de archivo y después desde la CLI se llama a cada script.
   - [ ] HoneyTokens
     - [ ] Terminar de cerrar qué honey tokens vamos a hacer (mínimo 5)
-    - [ ] Ivo: Hacer script QR
-    - [ ] Lore: Hacer script Binario
-    - [ ] Manu: Hacer scrip Mysql Dump
+    - [X] Ivo: Hacer script QR
+    - [X] Lore: Hacer script Binario
+    - [x] Manu: Hacer scrip Mysql Dump
+      - Ver de hacer que distinga entre dumps
     - [ ] Gonza: Hacer script que copia pagina web
     - [X] Gonza: Hacer script markdown
-    - [ ] Lore: Hacer script Mail
+    - [X] Lore: Hacer script Mail
     - [ ] Hacer script Excel
     - [ ] Hacer script Docs
     - [ ] Hacer script PDF

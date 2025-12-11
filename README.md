@@ -88,3 +88,23 @@ python3 tokensnare-cli.py markdown -i ../../README.md -o secret_info.md
 ```
 
 Ese markdown si es agregado a un repo de github cada ves que sea accedido en el navegador, va a llamar al backend alertando el token fue accedido.
+
+#### mysql_dump.py
+
+Ejemplo de uso:
+
+```bash
+python3 ./tokensnare-cli.py mysql-dump -o token.sql
+```
+
+El subcomando mysql-dump genera un dump que al ser restaurado alerta al web server. Puede ser generado en base a uno genérico o un dump customizado puede ser provisto con la opción `-i/--input`. Algunas limitaciones actuales de la implementación son:
+
+- No se puede distinguir entre distintos tokens de dumps. Con lo cual, de haber más de uno, la alerta solo podrá reconocer que alguno de ellos se intentó restaurar.
+- Las instrucciones de replicación de base de datos, las cuales efectivamente realizan el llamado al servidor web, se están actualmente appendeando al final del dump. Esto puede llegar a ser fácil para un atacante reconocer. En el futuro se debería de correctamente parsear el dump e insertarlas entre medio de instrucciones en una posición aleatoria.
+- El dump genérico es estático y chico. En el futuro de ganar popularidad la herramienta, el mismo será fácil de reconocer. Eventualmente se debería de proveer un dump aleatorio.
+
+Para testearlo, proveímos en el compose del web server un contenedor mysql que simluará del gestor de base de datos de un atacante. Al restorear el dump en el contenedor se debería de alertar el servidor web:
+
+```bash
+docker exec mysql_client mysql -h honeytokens -P 3306 -u root < <path-to-tokenized-dump> 
+```

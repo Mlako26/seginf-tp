@@ -1,3 +1,5 @@
+import socket
+import threading
 from flask import Flask, jsonify, request
 import secrets
 import sqlite3
@@ -54,7 +56,42 @@ def access_resource(token: str):
     conn.close()
     return "", 204
 
+##############################################
+#                SERVIDOR TCP                #
+##############################################
+
+def tcp_server(host="0.0.0.0", port=3306):
+    print(f"[TCP] Escuchando en puerto {port}...")
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((host, port))
+    s.listen(5)
+
+    while True:
+        conn, addr = s.accept()
+        ip = addr[0]
+        print(f"[TCP] Conexión entrante desde {ip}")
+        
+        db = get_db()
+        db.execute("INSERT INTO access_logs (token) VALUES (?)", ("mysql-dump",))
+        db.commit()
+        db.close()
+
+        conn.close()
+
+        # data = b""
+        # # Leer hasta que cierre la conexión
+        # while True:
+        #     chunk = conn.recv(4096)
+        #     if not chunk:
+        #         break
+        #     data += chunk
+
+        # raw_text = data.decode(errors="ignore").strip()
+        # print(f"[TCP] Dump recibido:\n{raw_text}\n")
 
 if __name__ == "__main__":
+    # Separate thread for the TCP mysql simulator
+    threading.Thread(target=tcp_server, daemon=True).start()
+    
+    # HTTP server with flask
     app.run(host="0.0.0.0", port=8080)
-
