@@ -79,6 +79,14 @@ La idea de la interfaz es que todos los tokens reciban como mínimo:
 - `endpoint_base_uri`: A qué endpoint llamar del webserver. Es una uri "base" ya que luego puede extenderse con lo que el token en particular necesite. Por ejemplo, si en un markdown se requiere importar algo de tipo `.img`, entonces puede realizarse un GET a `{endpoint_base_uri}.img`.
 - `kwargs`: Cualquier otro argumento que requiera ese token en específico.
 
+#### webpage.py
+
+Ejemplo de uso:
+
+```bash 
+python3 tokensnare-cli.py web-page --url "https://www.google.com" --output "./tokens/google.html"
+```
+
 #### markdown.py
 
 Ejemplo de uso:

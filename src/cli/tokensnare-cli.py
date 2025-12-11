@@ -8,7 +8,7 @@ from generators.honeytoken import HoneyTokenGenerator
 from generators.binary import BinaryHoneyTokenGenerator
 from generators.email import EmailHoneyTokenGenerator
 from generators.qr import QRHoneyTokenGenerator
-
+from generators.webpage import WebPageGenerator
 
 def generate_token(type: str, output_path: str, **kwargs) -> None:
     endpoint_base_url = get_endpoint_base_uri()
@@ -45,6 +45,8 @@ def get_token_generator(type: str) -> HoneyTokenGenerator:
             return EmailHoneyTokenGenerator()
         case "qr":
             return QRHoneyTokenGenerator()
+        case "web-page":
+            return WebPageGenerator()
         case _:
             print("No generator defined for this type of HoneyToken")
             quit(1)
@@ -95,6 +97,12 @@ def generate_web_page(output: str):
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
 def generate_email(output: str):
     generate_token("email", output)
+
+@tokensnare.command("web-page")
+@click.option("--url", "-u", help="URL of the page to copy and inject", required=True)
+@click.option("--output", "-o", help="Where to write the modified HTML", required=True)
+def generate_web_page(url: str, output: str):
+    generate_token("web-page", output, url=url)
 
 
 if __name__ == '__main__':
