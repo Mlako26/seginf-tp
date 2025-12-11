@@ -1,9 +1,9 @@
 from pathlib import Path
 from generators.honeytoken import HoneyTokenGenerator
-import os
 import stat
 
-BINARY_SCRIPT_TEMPLATE = """#!/usr/bin/env python3
+BINARY_SCRIPT_TEMPLATE = """
+#!/usr/bin/env python3
 import urllib.request
 
 def main():
@@ -18,7 +18,6 @@ def main():
 if __name__ == "__main__":
     main()
 """
-
 
 class BinaryHoneyTokenGenerator(HoneyTokenGenerator):
     def generate(self, output_path: str, endpoint_base_uri: str, **kwargs):
