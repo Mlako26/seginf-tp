@@ -87,16 +87,11 @@ def generate_mysql_dump(output: str, input: str | None) -> None:
     generate_token("mysql-dump", output, input_path=input)
 
 
-@tokensnare.command("web-page")
-@click.option("--output", "-o", help="File path were the token will be created at", required=True)
-def generate_web_page(output: str):
-    print("web-page generated!")
-
-
 @tokensnare.command("email")
 @click.option("--output", "-o", help="File path were the token will be created at", required=True)
 def generate_email(output: str):
     generate_token("email", output)
+
 
 @tokensnare.command("web-page")
 @click.option("--url", "-u", help="URL of the page to copy and inject", required=True)
